@@ -1,4 +1,8 @@
-on: push
+on:
+  push:
+    tags:
+      - '*.*.*'
+
 name: Build Tezos Client
 jobs:
   build:
