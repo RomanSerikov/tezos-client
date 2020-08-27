@@ -20,8 +20,8 @@ RUN rustup default 1.39.0
 
 COPY static_libs.patch /static.patch
 RUN git clone https://gitlab.com/tezos/tezos.git --depth 1
-RUN git checkout b1f564b445bcf1921c0e8c6a0ebfb2e93eb2a1f0
 WORKDIR /tezos
+RUN git checkout b1f564b445bcf1921c0e8c6a0ebfb2e93eb2a1f0
 RUN git apply /static.patch
 RUN export OPAMYES="true" && opam init --bare --disable-sandboxing && make build-deps
 RUN eval "$(opam env)" && make
