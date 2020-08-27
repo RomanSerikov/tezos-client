@@ -109,10 +109,10 @@ index 0902181..30fe55b 100644
  
  (executable
 diff --git a/src/lib_client_base_unix/client_config.ml b/src/lib_client_base_unix/client_config.ml
-index 422de8d72..acf9c8570 100644
+index 810fa250e..4841ba210 100644
 --- a/src/lib_client_base_unix/client_config.ml
 +++ b/src/lib_client_base_unix/client_config.ml
-@@ -746,7 +746,7 @@ let default_parsed_config_args =
+@@ -748,7 +748,7 @@ let default_parsed_config_args =
   * (when all/most commands will fail) or emits a warning (some commands may
   * fail).
   *)
@@ -121,7 +121,7 @@ index 422de8d72..acf9c8570 100644
    let open Tezos_mockup.Persistence in
    let base_dir_class = classify_base_dir base_dir in
    match client_mode with
-@@ -769,21 +769,7 @@ let check_base_dir_for_mode (ctx : #Client_context.full) client_mode base_dir =
+@@ -771,21 +771,7 @@ let check_base_dir_for_mode (ctx : #Client_context.full) client_mode base_dir =
            base_dir_class
      | _ ->
          return_unit )
@@ -141,10 +141,10 @@ index 422de8d72..acf9c8570 100644
 -    | Base_dir_is_mockup ->
 -        return_unit )
 +  | Mode_mockup -> return_unit
-
- let build_endpoint addr port tls =
-   let updatecomp updatef ov uri =
-@@ -836,7 +822,7 @@ let parse_config_args (ctx : #Client_context.full) argv =
+ 
+ let decide_endpoint endpoint addr port tls =
+   match endpoint with
+@@ -842,7 +828,7 @@ let parse_config_args (ctx : #Client_context.full) argv =
          (* In mockup mode base dir may be created automatically. *)
          return dir ) )
    >>=? fun base_dir ->
@@ -159,7 +159,7 @@ index 7fe64222f..b753650e5 100644
 +++ b/src/lib_micheline/micheline_parser.ml
 @@ -725,35 +725,8 @@ let rec parse ?(check = true) errors tokens stack =
        parse ~check errors rest (push_mode mode stack)
-
+ 
  (* indentation checker *)
 -and do_check ?(toplevel = false) errors = function
 -  | Seq ({start; stop}, []) as expr ->
@@ -192,6 +192,6 @@ index 7fe64222f..b753650e5 100644
 -      errors
 +and do_check ?toplevel:_ errors = function
 +  | _ -> errors
-
+ 
  let parse_expression ?check tokens =
    let result =
