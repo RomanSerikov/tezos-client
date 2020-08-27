@@ -7,8 +7,7 @@ jobs:
     - uses: actions/checkout@master
     - name: build
       run: |
-        docker build --tag tezos-client .
-        docker cp tezos-client:/tezos/tezos-client .
+        sh build.sh
     - name: automatic release
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
